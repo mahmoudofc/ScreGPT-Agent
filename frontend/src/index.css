@@ -1,0 +1,1282 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@keyframes scan-sweep {
+  0% { top: -7rem; opacity: 0.55; }
+  6% { opacity: 1; }
+  94% { opacity: 1; }
+  100% { top: calc(100% - 7rem); opacity: 0.55; }
+}
+
+.scan-sweep {
+  animation: scan-sweep 1.9s cubic-bezier(0.45, 0.05, 0.55, 0.95) infinite alternate;
+  will-change: top, opacity;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .scan-sweep {
+    animation: none;
+    opacity: 0.7;
+    top: calc(50% - 3.5rem);
+  }
+}
+
+/* Image Scanning animation */
+.scanning::after {
+  content: "";
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  width: 5px;
+  height: 100%;
+  background-image: linear-gradient(
+    to right,
+    rgba(19, 161, 14, 0.2),
+    /* Darker matrix green with full transparency */ rgba(19, 161, 14, 0.8)
+      /* The same green with 80% opacity */
+  );
+  animation: scanning 3s ease-in-out infinite;
+}
+
+@keyframes scanning {
+  0%,
+  100% {
+    transform: translateX(0px);
+  }
+  50% {
+    transform: translateX(340px);
+  }
+}
+
+@layer base {
+  :root {
+    --background: 0 0% 100%;
+    --foreground: 222 47% 11%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 222 47% 11%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 222 47% 11%;
+
+    --primary: 243 75% 59%;
+    --primary-foreground: 0 0% 100%;
+
+    --secondary: 226 71% 96%;
+    --secondary-foreground: 226 30% 20%;
+
+    --muted: 220 23% 96%;
+    --muted-foreground: 220 9% 46%;
+
+    --accent: 243 75% 96%;
+    --accent-foreground: 243 60% 32%;
+
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 220 17% 88%;
+    --input: 220 17% 88%;
+    --ring: 243 75% 59%;
+
+    --radius: 0.625rem;
+  }
+  
+  .dark body,
+  body.dark {
+    background-color: black;
+  }
+
+  .dark div[role="presentation"],
+  div[role="presentation"].dark {
+    background-color: #09090b !important;
+  }
+
+  iframe[srcdoc] {
+    background-color: white !important; 
+  }
+
+  .dark {
+    color-scheme: dark;
+
+    --background: 228 30% 7%;
+    --foreground: 220 20% 96%;
+
+    --card: 228 26% 10%;
+    --card-foreground: 220 20% 96%;
+
+    --popover: 228 26% 10%;
+    --popover-foreground: 220 20% 96%;
+
+    --primary: 243 75% 66%;
+    --primary-foreground: 228 30% 8%;
+
+    --secondary: 226 20% 18%;
+    --secondary-foreground: 220 20% 96%;
+
+    --muted: 226 20% 18%;
+    --muted-foreground: 220 12% 65%;
+
+    --accent: 243 40% 22%;
+    --accent-foreground: 220 20% 96%;
+
+    --destructive: 0 62% 45%;
+    --destructive-foreground: 220 20% 98%;
+
+    --border: 226 18% 20%;
+    --input: 226 18% 20%;
+    --ring: 243 75% 66%;
+  }
+}
+
+.sidebar-scrollbar-stable {
+  scrollbar-gutter: stable;
+}
+
+.active-step-shimmer {
+  background: linear-gradient(
+    90deg,
+    #374151 0%,
+    #374151 27%,
+    #6b7280 29%,
+    #f3f4f6 30%,
+    #6b7280 31%,
+    #374151 33%,
+    #374151 67%,
+    #6b7280 69%,
+    #f3f4f6 70%,
+    #6b7280 71%,
+    #374151 73%,
+    #374151 100%
+  );
+  background-size: 240% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: searchlight 5.5s linear infinite;
+}
+
+:is(.dark) .active-step-shimmer {
+  background: linear-gradient(
+    90deg,
+    #94a3b8 0%,
+    #94a3b8 27%,
+    #cbd5e1 29%,
+    #ffffff 30%,
+    #cbd5e1 31%,
+    #94a3b8 33%,
+    #94a3b8 67%,
+    #cbd5e1 69%,
+    #ffffff 70%,
+    #cbd5e1 71%,
+    #94a3b8 73%,
+    #94a3b8 100%
+  );
+  background-size: 240% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: searchlight 5.5s linear infinite;
+}
+
+/* Working indicator background motion */
+.working-indicator-bg {
+  background: linear-gradient(
+    90deg,
+    #f5f3ff 0%,
+    #ffffff 45%,
+    #ede9fe 55%,
+    #ffffff 100%
+  );
+  background-size: 220% 100%;
+  animation: workingGradientSlide 4s ease-in-out infinite;
+}
+
+:is(.dark) .working-indicator-bg {
+  background: linear-gradient(
+    90deg,
+    rgba(76, 29, 149, 0.2) 0%,
+    rgba(24, 24, 27, 1) 45%,
+    rgba(76, 29, 149, 0.28) 55%,
+    rgba(24, 24, 27, 1) 100%
+  );
+  background-size: 220% 100%;
+}
+
+@keyframes workingGradientSlide {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+@keyframes searchlight {
+  0% {
+    background-position: 140% center;
+  }
+  100% {
+    background-position: -40% center;
+  }
+}
+
+/* Gentle entrance for agent activity rows */
+@keyframes agentEnter {
+  from {
+    opacity: 0;
+    transform: translateY(4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.agent-enter {
+  animation: agentEnter 0.28s ease-out both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .agent-enter {
+    animation: none;
+  }
+}
+
+/* Animated progress underline used by the "Working..." banner */
+@keyframes progressSweep {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(300%);
+  }
+}
+
+.progress-sweep {
+  animation: progressSweep 1.6s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .progress-sweep {
+    animation: none;
+  }
+}
+
+/* Soft brand backdrop for full-screen surfaces (auth, start hero) */
+.brand-backdrop {
+  background:
+    radial-gradient(60rem 60rem at 15% -10%, rgba(99, 102, 241, 0.12), transparent 60%),
+    radial-gradient(50rem 50rem at 100% 0%, rgba(217, 70, 239, 0.1), transparent 55%),
+    linear-gradient(180deg, #f8fafc 0%, #eef2ff 100%);
+}
+
+:is(.dark) .brand-backdrop {
+  background:
+    radial-gradient(60rem 60rem at 15% -10%, rgba(99, 102, 241, 0.18), transparent 60%),
+    radial-gradient(50rem 50rem at 100% 0%, rgba(217, 70, 239, 0.14), transparent 55%),
+    linear-gradient(180deg, #0b0b12 0%, #12121c 100%);
+}
+
+/* Floating decorative orbs for the auth showcase */
+@keyframes orbFloat {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+  50% {
+    transform: translate3d(0, -22px, 0) scale(1.06);
+  }
+}
+
+.orb-float {
+  animation: orbFloat 9s ease-in-out infinite;
+  will-change: transform;
+}
+
+/* Rotating highlight fade */
+@keyframes fadeSwap {
+  0% {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  12%,
+  88% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(-6px);
+  }
+}
+
+.fade-swap {
+  animation: fadeSwap 5s ease-in-out;
+}
+
+/* Slow conic spin used behind the showcase logo */
+@keyframes spinSlow {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.spin-slow {
+  animation: spinSlow 16s linear infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .orb-float,
+  .spin-slow {
+    animation: none;
+  }
+  .fade-swap {
+    animation: none;
+    opacity: 1;
+  }
+}
+
+/* Fine dotted grid overlay */
+.dot-grid {
+  background-image: radial-gradient(
+    rgba(99, 102, 241, 0.18) 1px,
+    transparent 1px
+  );
+  background-size: 22px 22px;
+}
+
+/* Chat typing dots */
+@keyframes typingBounce {
+  0%,
+  60%,
+  100% {
+    transform: translateY(0);
+    opacity: 0.35;
+  }
+  30% {
+    transform: translateY(-4px);
+    opacity: 1;
+  }
+}
+
+.typing-dot {
+  animation: typingBounce 1.2s ease-in-out infinite;
+}
+
+/* Chat bubble pop-in */
+@keyframes bubbleIn {
+  0% {
+    opacity: 0;
+    transform: translateY(8px) scale(0.98);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.bubble-in {
+  animation: bubbleIn 0.3s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+/* Indeterminate loading bar for the splash screen */
+@keyframes loadBarSlide {
+  0% {
+    transform: translateX(-60%);
+  }
+  100% {
+    transform: translateX(260%);
+  }
+}
+
+.load-bar {
+  animation: loadBarSlide 1.4s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .typing-dot,
+  .bubble-in,
+  .load-bar {
+    animation: none;
+  }
+}
+
+/* ---------------------------------------------------------------------------
+   3D agent stage + stronger motion system
+   ------------------------------------------------------------------------- */
+
+/* Perspective helpers used by the CSS-3D agent */
+.perspective-600 {
+  perspective: 600px;
+}
+
+.preserve-3d {
+  transform-style: preserve-3d;
+}
+
+.backface-hidden {
+  backface-visibility: hidden;
+}
+
+/* Whole-body float with a subtle 3D tilt */
+@keyframes agentFloat {
+  0%,
+  100% {
+    transform: translateY(0) rotateX(6deg) rotateY(-9deg);
+  }
+  50% {
+    transform: translateY(-12px) rotateX(11deg) rotateY(9deg);
+  }
+}
+
+.agent-float {
+  animation: agentFloat 6.5s ease-in-out infinite;
+  transform-style: preserve-3d;
+  will-change: transform;
+}
+
+/* Gentle vertical bob for compact avatars */
+@keyframes agentBob {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-3px);
+  }
+}
+
+.agent-bob {
+  animation: agentBob 3s ease-in-out infinite;
+}
+
+/* Orbiting rings around the agent (tilted for depth) */
+@keyframes orbitSpin {
+  from {
+    transform: rotateX(72deg) rotateZ(0deg);
+  }
+  to {
+    transform: rotateX(72deg) rotateZ(360deg);
+  }
+}
+
+.agent-orbit {
+  animation: orbitSpin 9s linear infinite;
+}
+
+.agent-orbit-rev {
+  animation: orbitSpin 13s linear infinite reverse;
+}
+
+/* Blinking eyes */
+@keyframes eyeBlink {
+  0%,
+  90%,
+  100% {
+    transform: scaleY(1);
+  }
+  95% {
+    transform: scaleY(0.12);
+  }
+}
+
+.agent-eye {
+  animation: eyeBlink 4.6s ease-in-out infinite;
+}
+
+/* Breathing glow halo */
+@keyframes glowPulse {
+  0%,
+  100% {
+    opacity: 0.5;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.9;
+    transform: scale(1.08);
+  }
+}
+
+.agent-glow {
+  animation: glowPulse 3.4s ease-in-out infinite;
+}
+
+/* Faster, livelier state while the agent is working */
+.agent-working .agent-orbit {
+  animation-duration: 3.2s;
+}
+
+.agent-working .agent-orbit-rev {
+  animation-duration: 4.6s;
+}
+
+.agent-working .agent-glow {
+  animation-duration: 1.4s;
+}
+
+/* Ground shadow that squishes/fades as the body floats upward */
+@keyframes agentShadowSquish {
+  0%,
+  100% {
+    transform: scaleX(1);
+    opacity: 0.75;
+  }
+  50% {
+    transform: scaleX(0.78);
+    opacity: 0.4;
+  }
+}
+
+.agent-ground-shadow {
+  animation: agentShadowSquish 6.5s ease-in-out infinite;
+}
+
+/* Antenna tip ping */
+@keyframes antennaPing {
+  0%,
+  100% {
+    box-shadow: 0 0 0 0 rgba(217, 70, 239, 0.55);
+  }
+  50% {
+    box-shadow: 0 0 0 6px rgba(217, 70, 239, 0);
+  }
+}
+
+.agent-antenna {
+  animation: antennaPing 2.2s ease-out infinite;
+}
+
+/* Particles riding the orbit rings */
+@keyframes orbitSpinTilt {
+  from {
+    transform: rotateX(72deg) rotateZ(0deg);
+  }
+  to {
+    transform: rotateX(72deg) rotateZ(360deg);
+  }
+}
+
+.agent-particle {
+  animation: orbitSpinTilt 6s linear infinite;
+}
+
+.agent-particle-rev {
+  animation: orbitSpinTilt 8.5s linear infinite reverse;
+}
+
+.agent-working .agent-particle {
+  animation-duration: 2.4s;
+}
+
+.agent-working .agent-particle-rev {
+  animation-duration: 3.4s;
+}
+
+/* Mouth "equalizer" bars while the agent is working */
+@keyframes agentTalk {
+  0%,
+  100% {
+    transform: scaleY(0.5);
+  }
+  50% {
+    transform: scaleY(1);
+  }
+}
+
+.agent-mouth-bar {
+  transform-origin: center;
+  animation: agentTalk 0.9s ease-in-out infinite;
+}
+
+/* Conic halo used by the compact avatar */
+@keyframes haloSpin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.agent-halo {
+  background: conic-gradient(
+    from 0deg,
+    rgba(99, 102, 241, 0),
+    rgba(99, 102, 241, 0.55),
+    rgba(217, 70, 239, 0.55),
+    rgba(99, 102, 241, 0)
+  );
+  animation: haloSpin 4s linear infinite;
+}
+
+.agent-working .agent-halo {
+  animation-duration: 1.6s;
+}
+
+/* Rotating conic aura ring behind the full agent */
+.agent-aura {
+  background: conic-gradient(
+    from 0deg,
+    rgba(99, 102, 241, 0),
+    rgba(99, 102, 241, 0.5),
+    rgba(217, 70, 239, 0.5),
+    rgba(56, 189, 248, 0.4),
+    rgba(99, 102, 241, 0)
+  );
+  animation: haloSpin 7s linear infinite;
+  will-change: transform;
+}
+
+.agent-working .agent-aura {
+  animation-duration: 2.6s;
+}
+
+/* Twinkling sparkles around the hero agent */
+@keyframes agentTwinkle {
+  0%,
+  100% {
+    opacity: 0;
+    transform: scale(0.4);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.agent-sparkle {
+  animation: agentTwinkle 2.6s ease-in-out infinite;
+}
+
+.agent-sparkle-2 {
+  animation-duration: 3.1s;
+  animation-delay: -1s;
+}
+
+.agent-sparkle-3 {
+  animation-duration: 2.2s;
+  animation-delay: -1.6s;
+}
+
+/* Blinking forehead status LED */
+@keyframes ledBlink {
+  0%,
+  100% {
+    opacity: 0.35;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+.agent-led {
+  animation: ledBlink 2.4s ease-in-out infinite;
+}
+
+.agent-working .agent-led {
+  animation-duration: 1s;
+}
+
+/* Static LCD pixel texture over the face screen */
+.agent-lcd-grid {
+  background-image:
+    linear-gradient(rgba(129, 140, 248, 0.12) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(129, 140, 248, 0.12) 1px, transparent 1px);
+  background-size: 4px 4px;
+}
+
+/* Live progress bubble beside the chat avatar while the agent works */
+@keyframes agentThinkingPop {
+  0% {
+    opacity: 0;
+    transform: scale(0.6);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.agent-thinking-dots {
+  transform-origin: bottom left;
+  animation: agentThinkingPop 0.25s ease-out both;
+}
+
+@keyframes agentDotBounce {
+  0%,
+  80%,
+  100% {
+    transform: translateY(0);
+    opacity: 0.55;
+  }
+  40% {
+    transform: translateY(-2px);
+    opacity: 1;
+  }
+}
+
+.agent-dot {
+  animation: agentDotBounce 1s ease-in-out infinite;
+}
+
+/* One-shot reactions replayed when the agent enters a terminal mood */
+@keyframes agentCelebrate {
+  0% {
+    transform: scale(1);
+  }
+  30% {
+    transform: scale(1.12);
+  }
+  55% {
+    transform: scale(0.95);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+@keyframes agentShake {
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+  18% {
+    transform: translateX(-5px) rotate(-2deg);
+  }
+  38% {
+    transform: translateX(5px) rotate(2deg);
+  }
+  58% {
+    transform: translateX(-4px) rotate(-1deg);
+  }
+  78% {
+    transform: translateX(4px) rotate(1deg);
+  }
+}
+
+.agent-celebrate {
+  animation: agentCelebrate 0.6s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.agent-shake {
+  animation: agentShake 0.5s ease-in-out both;
+}
+
+/* Scanning beam across the face screen while working */
+@keyframes agentScan {
+  0% {
+    transform: translateY(-140%);
+  }
+  100% {
+    transform: translateY(240%);
+  }
+}
+
+.agent-scan {
+  animation: agentScan 2.4s ease-in-out infinite;
+}
+
+/* Cascade entrance utilities */
+@keyframes riseIn {
+  from {
+    opacity: 0;
+    transform: translateY(16px) scale(0.99);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.rise-in {
+  animation: riseIn 0.5s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+@keyframes popIn {
+  0% {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+  60% {
+    transform: scale(1.02);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.pop-in {
+  animation: popIn 0.45s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+/* Staggered row entrance: set --row-index (0-based) on each row to cascade. */
+.stagger-row {
+  animation: riseIn 0.4s cubic-bezier(0.22, 1, 0.36, 1) both;
+  animation-delay: calc(var(--row-index, 0) * 45ms);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .stagger-row {
+    animation: none;
+  }
+}
+
+/* Breathing dot on unsaved-editor indicators. */
+@keyframes dotPulse {
+  0%,
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.4;
+    transform: scale(0.75);
+  }
+}
+
+.dot-pulse {
+  animation: dotPulse 1.6s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .dot-pulse {
+    animation: none;
+  }
+}
+
+/* Moving sheen overlay (glossy highlights) */
+@keyframes sheenSlide {
+  0% {
+    background-position: -160% 0;
+  }
+  100% {
+    background-position: 160% 0;
+  }
+}
+
+.sheen {
+  background-image: linear-gradient(
+    110deg,
+    transparent 32%,
+    rgba(255, 255, 255, 0.4) 50%,
+    transparent 68%
+  );
+  background-size: 220% 100%;
+  animation: sheenSlide 3.6s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .agent-float,
+  .agent-bob,
+  .agent-orbit,
+  .agent-orbit-rev,
+  .agent-eye,
+  .agent-glow,
+  .agent-antenna,
+  .agent-ground-shadow,
+  .agent-particle,
+  .agent-particle-rev,
+  .agent-mouth-bar,
+  .agent-halo,
+    .agent-aura,
+  .agent-sparkle,
+  .agent-led,
+  .agent-thinking-dots,
+  .agent-dot,
+  .agent-celebrate,
+  .agent-shake,
+  .agent-scan,
+  .rise-in,
+  .pop-in,
+  .sheen {
+    animation: none;
+  }
+}
+
+/* ---------------------------------------------------------------------------
+   Preview "build" studio stage + device frames
+   ------------------------------------------------------------------------- */
+
+/* Agent eye look-around drift */
+@keyframes agentLook {
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+  25% {
+    transform: translateX(2px);
+  }
+  75% {
+    transform: translateX(-2px);
+  }
+}
+
+.agent-look {
+  animation: agentLook 5.5s ease-in-out infinite;
+}
+
+/* Studio backdrop the generated page floats on */
+.studio-backdrop {
+  background:
+    radial-gradient(44rem 44rem at 50% -12%, rgba(99, 102, 241, 0.12), transparent 60%),
+    radial-gradient(34rem 34rem at 105% 110%, rgba(217, 70, 239, 0.1), transparent 55%),
+    radial-gradient(30rem 30rem at -8% 100%, rgba(56, 189, 248, 0.1), transparent 55%),
+    #eef2f7;
+}
+
+:is(.dark) .studio-backdrop {
+  background:
+    radial-gradient(44rem 44rem at 50% -12%, rgba(99, 102, 241, 0.18), transparent 60%),
+    radial-gradient(34rem 34rem at 105% 110%, rgba(217, 70, 239, 0.14), transparent 55%),
+    radial-gradient(30rem 30rem at -8% 100%, rgba(56, 189, 248, 0.1), transparent 55%),
+    #0a0a10;
+}
+
+/* Checkerboard/dot backdrop option for the preview stage */
+.preview-grid {
+  background-color: #eef2f7;
+  background-image:
+    linear-gradient(45deg, rgba(100, 116, 139, 0.08) 25%, transparent 25%),
+    linear-gradient(-45deg, rgba(100, 116, 139, 0.08) 25%, transparent 25%),
+    linear-gradient(45deg, transparent 75%, rgba(100, 116, 139, 0.08) 75%),
+    linear-gradient(-45deg, transparent 75%, rgba(100, 116, 139, 0.08) 75%);
+  background-size: 20px 20px;
+  background-position: 0 0, 0 10px, 10px -10px, -10px 0;
+}
+
+:is(.dark) .preview-grid {
+  background-color: #0a0a10;
+  background-image:
+    linear-gradient(45deg, rgba(148, 163, 184, 0.08) 25%, transparent 25%),
+    linear-gradient(-45deg, rgba(148, 163, 184, 0.08) 25%, transparent 25%),
+    linear-gradient(45deg, transparent 75%, rgba(148, 163, 184, 0.08) 75%),
+    linear-gradient(-45deg, transparent 75%, rgba(148, 163, 184, 0.08) 75%);
+}
+
+/* Browser-window chrome shell used for the desktop preview */
+.browser-shell {
+  box-shadow:
+    0 30px 60px -24px rgba(30, 41, 59, 0.4),
+    0 0 0 1px rgba(148, 163, 184, 0.22);
+}
+
+/* Phone bezel used for the mobile preview */
+.phone-frame {
+  position: relative;
+  padding: 11px;
+  border-radius: 44px;
+  background: linear-gradient(160deg, #1f2937 0%, #0b0f1a 100%);
+  box-shadow:
+    0 34px 70px -24px rgba(15, 23, 42, 0.6),
+    inset 0 0 0 2px rgba(255, 255, 255, 0.06),
+    0 0 0 1px rgba(148, 163, 184, 0.2);
+}
+
+.phone-notch {
+  position: absolute;
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 118px;
+  height: 20px;
+  border-radius: 14px;
+  background: #0b0f1a;
+  z-index: 3;
+}
+
+.phone-screen {
+  width: 375px;
+  height: 100%;
+  border-radius: 32px;
+  overflow: hidden;
+  background: #ffffff;
+  isolation: isolate;
+}
+
+/* Brand gradient text (headings, version labels) */
+.brand-gradient-text {
+  background-image: linear-gradient(100deg, #4f46e5 0%, #7c3aed 45%, #c026d3 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+}
+
+:is(.dark) .brand-gradient-text {
+  background-image: linear-gradient(100deg, #a5b4fc 0%, #c4b5fd 45%, #f0abfc 100%);
+}
+
+/* Device frame entrance (runs once on mount; inner iframe keeps its own transforms) */
+@keyframes frameIn {
+  0% {
+    opacity: 0;
+    transform: translateY(20px) scale(0.97);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.frame-in {
+  animation: frameIn 0.5s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+/* Status ring pulse for live/active build indicators */
+@keyframes ringPulse {
+  0% {
+    box-shadow: 0 0 0 0 rgba(99, 102, 241, 0.5);
+  }
+  70% {
+    box-shadow: 0 0 0 5px rgba(99, 102, 241, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(99, 102, 241, 0);
+  }
+}
+
+.ring-pulse {
+  animation: ringPulse 1.8s ease-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .agent-look,
+  .frame-in,
+  .ring-pulse {
+    animation: none;
+  }
+}
+
+/* ---------------------------------------------------------------------------
+   Landing page motion system
+   ------------------------------------------------------------------------- */
+
+/* Animated brand gradient for hero headline words */
+.animated-brand-gradient {
+  background-image: linear-gradient(
+    90deg,
+    #4f46e5,
+    #7c3aed,
+    #c026d3,
+    #7c3aed,
+    #4f46e5
+  );
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+  animation: gradientPan 6s linear infinite;
+}
+
+:is(.dark) .animated-brand-gradient {
+  background-image: linear-gradient(
+    90deg,
+    #a5b4fc,
+    #c4b5fd,
+    #f0abfc,
+    #c4b5fd,
+    #a5b4fc
+  );
+}
+
+@keyframes gradientPan {
+  to {
+    background-position: 200% center;
+  }
+}
+
+/* Aurora blobs drifting behind the hero */
+@keyframes auroraDrift {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+  33% {
+    transform: translate3d(4rem, -3rem, 0) scale(1.12);
+  }
+  66% {
+    transform: translate3d(-3rem, 2.5rem, 0) scale(0.94);
+  }
+}
+
+.aurora-blob {
+  animation: auroraDrift 16s ease-in-out infinite;
+  will-change: transform;
+}
+
+.aurora-blob-2 {
+  animation-duration: 20s;
+  animation-delay: -6s;
+}
+
+.aurora-blob-3 {
+  animation-duration: 24s;
+  animation-delay: -12s;
+}
+
+/* Slow panning dot grid so the backdrop feels alive */
+@keyframes gridPan {
+  to {
+    background-position: 22px 22px;
+  }
+}
+
+.dot-grid-pan {
+  animation: gridPan 3.2s linear infinite;
+}
+
+/* Lift-on-hover cards */
+.card-lift {
+  transition:
+    transform 0.3s cubic-bezier(0.22, 1, 0.36, 1),
+    box-shadow 0.3s ease,
+    border-color 0.3s ease;
+}
+
+.card-lift:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 24px 48px -20px rgba(79, 70, 229, 0.35);
+}
+
+:is(.dark) .card-lift:hover {
+  box-shadow: 0 24px 48px -20px rgba(99, 102, 241, 0.28);
+}
+
+/* Conic glow ring that lights up on hover (bento cards) */
+.hover-ring {
+  position: relative;
+}
+
+.hover-ring::before {
+  content: "";
+  position: absolute;
+  inset: -1px;
+  border-radius: inherit;
+  padding: 1px;
+  background: linear-gradient(130deg, #6366f1, #a855f7, #ec4899);
+  -webkit-mask:
+    linear-gradient(#fff 0 0) content-box,
+    linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  opacity: 0;
+  transition: opacity 0.35s ease;
+  pointer-events: none;
+}
+
+.hover-ring:hover::before {
+  opacity: 1;
+}
+
+/* Infinite logo/keyword marquee */
+@keyframes marqueeSlide {
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+.marquee-track {
+  animation: marqueeSlide 28s linear infinite;
+  will-change: transform;
+}
+
+/* Beam sweeping along the top edge of the CTA band */
+@keyframes beamSweep {
+  0% {
+    left: -30%;
+  }
+  100% {
+    left: 100%;
+  }
+}
+
+.beam-sweep {
+  animation: beamSweep 3.4s ease-in-out infinite;
+}
+
+/* Continuous 3D spin for hero floating chips */
+@keyframes float3d {
+  0%,
+  100% {
+    transform: translateY(0) rotateX(8deg) rotateY(-12deg);
+  }
+  50% {
+    transform: translateY(-14px) rotateX(-6deg) rotateY(12deg);
+  }
+}
+
+.float-3d {
+  animation: float3d 7s ease-in-out infinite;
+  transform-style: preserve-3d;
+  will-change: transform;
+}
+
+/* Subtle mouse-follow spotlight (layers read --spot-x/--spot-y in %) */
+.spotlight-layer {
+  background: radial-gradient(
+    36rem circle at var(--spot-x, 50%) var(--spot-y, 0%),
+    rgba(99, 102, 241, 0.16),
+    transparent 65%
+  );
+  transition: opacity 0.4s ease;
+}
+
+:is(.dark) .spotlight-layer {
+  background: radial-gradient(
+    36rem circle at var(--spot-x, 50%) var(--spot-y, 0%),
+    rgba(124, 58, 237, 0.22),
+    transparent 65%
+  );
+}
+
+/* Wide staggered entrances for landing sections */
+.rise-in-slow {
+  animation: riseIn 0.85s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animated-brand-gradient,
+  .aurora-blob,
+  .dot-grid-pan,
+  .marquee-track,
+  .beam-sweep,
+  .float-3d,
+  .rise-in-slow {
+    animation: none;
+  }
+  .animated-brand-gradient {
+    background-position: 0 center;
+  }
+  .card-lift {
+    transition: none;
+  }
+  .card-lift:hover {
+    transform: none;
+  }
+  .hover-ring::before {
+    display: none;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  html, body, #root {
+    @apply h-full;
+  }
+  body {
+    @apply bg-background text-foreground m-0 font-sans antialiased;
+    font-feature-settings: "cv02", "cv03", "cv04", "cv11", "ss01";
+    text-rendering: optimizeLegibility;
+  }
+  h1, h2, h3, h4 {
+    @apply font-display tracking-tight;
+  }
+}
